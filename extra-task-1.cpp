@@ -1,3 +1,5 @@
+
+#include <assert.h>
 double seconds_difference(double time_1, double time_2)
 {
     return (time_2 - time_1);
@@ -18,7 +20,8 @@ double to_float_hours(int hours, int minutes, int seconds)
 double to_24_hour_clock(double hours)
 {
     assert(hours >= 0);
-    return Ihours > 24) ? hours / 24 : hours;
+    int a = hours / 24;
+    return hours - (a * 24);
 }
 int get_hours(int sec)
 {
@@ -112,4 +115,31 @@ double time_from_utc(int utc_offset, double time)
         >>> time_from_utc(+1, 23.0)
         0.0
     */
+}
+
+int main()
+{
+    assert(seconds_difference(1800.0, 3600.0) == 1800.0);
+    assert(seconds_difference(3600.0, 1800.0) == -1800.0);
+    assert(seconds_difference(1800.0, 2160.0) == 360.0);
+    assert(seconds_difference(1800.0, 1800.0) == 0.0);
+
+    assert(hours_difference(1800.0, 3600.0) == 0.5);
+    assert(hours_difference(3600.0, 1800.0) == -0.5);
+    assert(hours_difference(1800.0, 2160.0) == 0.1);
+    assert(hours_difference(1800.0, 1800.0) == 0.0);
+
+    assert(to_float_hours(0, 15, 0) == 0.25);
+    assert(to_float_hours(2, 45, 9) == 2.7525);
+    assert(to_float_hours(1, 0, 36) == 1.01);
+
+    assert(to_24_hour_clock(24) == 0);
+    assert(to_24_hour_clock(48) == 0);
+    assert(to_24_hour_clock(25) == 1);
+    assert(to_24_hour_clock(4) == 4);
+    assert(to_24_hour_clock(28.5) == 4.5);
+
+    assert(get_hours(3800) == 1);
+    assert(get_minutes(3800) == 3);
+    assert(get_seconds(3800) == 20);
 }
