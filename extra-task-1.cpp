@@ -20,7 +20,20 @@ double to_24_hour_clock(double hours)
     assert(hours >= 0);
     return Ihours > 24) ? hours / 24 : hours;
 }
+int get_hours(int sec)
+{
+    return sec / 3600 % 24;
+}
 
+int get_minutes(int sec)
+{
+    return sec / 60 % 60;
+}
+
+int get_seconds(int sec)
+{
+    return sec % 60;
+}
 /*
     Implement three functions
         * get_hours
